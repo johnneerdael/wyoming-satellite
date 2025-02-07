@@ -389,7 +389,7 @@ async def main() -> None:
         ),
         snd=SndSettings(
             uri=args.snd_uri,
-            command=split_command(args.snd_command),
+            command=args.snd_command,  # Don't split the command since it's a device name for catt
             rate=args.snd_command_rate,
             width=args.snd_command_width,
             channels=args.snd_command_channels,

@@ -590,15 +590,18 @@ class SatelliteBase:
                     temp_wav = self._temp_wav_dir / f"tts_{time.time_ns()}.wav"
                     try:
                         # Create WAV file in write mode
-                        with wave.open(str(temp_wav), "wb") as wav_file:  # type: ignore[attr-defined]
+                        wav_file: wave.Wave_write = wave.open(str(temp_wav), "wb")
+                        try:
                             first_chunk = self._current_tts_chunks[0]
                             # Set WAV parameters
-                            wav_file.setnchannels(first_chunk.channels)  # type: ignore[attr-defined]
-                            wav_file.setsampwidth(first_chunk.width)  # type: ignore[attr-defined]
-                            wav_file.setframerate(first_chunk.rate)  # type: ignore[attr-defined]
+                            wav_file.setnchannels(first_chunk.channels)
+                            wav_file.setsampwidth(first_chunk.width)
+                            wav_file.setframerate(first_chunk.rate)
                             # Write audio data
                             for chunk in self._current_tts_chunks:
-                                wav_file.writeframes(chunk.audio)  # type: ignore[attr-defined]
+                                wav_file.writeframes(chunk.audio)
+                        finally:
+                            wav_file.close()
 
                         # Use catt to play the audio after WAV file is closed
                         if not self.settings.snd.command:
@@ -610,7 +613,7 @@ class SatelliteBase:
                             stdout=asyncio.subprocess.PIPE,
                             stderr=asyncio.subprocess.PIPE
                         )
-                        stdout, stderr = await process.communicate()
+                        _, stderr = await process.communicate()
 
                         if process.returncode != 0:
                             error_msg = stderr.decode().strip() if stderr else "Unknown error"
@@ -677,7 +680,7 @@ class SatelliteBase:
                 stderr=asyncio.subprocess.PIPE
             )
             
-            stdout, stderr = await process.communicate()  # Wait for playback to complete
+            _, stderr = await process.communicate()  # Wait for playback to complete
             
             if process.returncode != 0:
                 error_msg = stderr.decode().strip() if stderr else "Unknown error"
