@@ -18,7 +18,7 @@ A fork of the [Wyoming Satellite](https://github.com/rhasspy/wyoming-satellite) 
 1. System packages:
 ```bash
 sudo apt-get update
-sudo apt-get install python3-venv
+sudo apt-get install python3-venv alsa-utils sox
 ```
 
 2. Python virtual environment setup:
