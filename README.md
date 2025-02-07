@@ -40,6 +40,11 @@ pip install -r requirements.txt
    * Automatically installed via requirements.txt
    * Helps improve audio quality in noisy environments
 
+3. Cast All The Things (catt):
+   * Cast All The Things allows you to send videos from many, many online sources (YouTube, Vimeo, and a few hundred others) to your Chromecast.
+   * It also allows you to cast local files or render websites.
+   * Automatically installed via requirements.txt
+
 ## Running the Satellite
 
 Example command with all features enabled and also a localwakeword instance running:
