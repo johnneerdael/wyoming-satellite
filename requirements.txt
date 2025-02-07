@@ -1,0 +1,13 @@
+# Core dependencies
+wyoming-satellite
+pyring_buffer
+
+# Voice Activity Detection (VAD)
+pysilero-vad
+
+# Audio enhancements
+webrtc-noise-gain
+
+# Audio tools
+sox  # For audio capture and processing
+catt  # For Chromecast audio output

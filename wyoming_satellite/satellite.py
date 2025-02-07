@@ -601,8 +601,12 @@ class SatelliteBase:
                                 wav_file.writeframes(chunk.audio)  # type: ignore[attr-defined]
 
                         # Use catt to play the audio after WAV file is closed
+                        if not self.settings.snd.command:
+                            _LOGGER.error("No sound command configured")
+                            return
+                            
                         process = await asyncio.create_subprocess_exec(
-                            'catt', '--device', 'Boardgame Room Display', 'cast', str(temp_wav),
+                            'catt', '--device', self.settings.snd.command, 'cast', str(temp_wav),
                             stdout=asyncio.subprocess.PIPE,
                             stderr=asyncio.subprocess.PIPE
                         )
@@ -663,8 +667,12 @@ class SatelliteBase:
                 )
 
             # Use catt to cast the audio
+            if not self.settings.snd.command:
+                _LOGGER.error("No sound command configured")
+                return
+                
             process = await asyncio.create_subprocess_exec(
-                'catt', '--device', 'Boardgame Room Display', 'cast', str(wav_path),
+                'catt', '--device', self.settings.snd.command, 'cast', str(wav_path),
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE
             )

@@ -1,0 +1,14 @@
+[Unit]
+Description=Wyoming Satellite Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/wyoming-satellite
+ExecStart=/bin/bash -c "source /root/wyoming-satellite/.venv/bin/activate && /root/wyoming-satellite/script/run --name 'My Assist Pipeline' --uri 'tcp://0.0.0.0:10700' --mic-command 'sox -t alsa hw:0,0 -r 48000 -c 2 -t raw -r 16000 -c 1 -b 16 -' --snd-command 'aplay -t raw'  --wake-uri 'tcp://127.0.0.1:10400' --wake-word-name ok_nabu --vad --mic-auto-gain 5 --mic-noise-suppression 2"
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
